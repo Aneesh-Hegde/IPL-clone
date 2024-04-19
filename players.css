@@ -1,0 +1,58 @@
+@font-face {
+    font-family: bebas;
+    src: url(./BebasNeue-Regular.ttf);
+}
+*{
+    margin: 0;
+    padding: 0;
+}
+html,body{
+    height: 100%;
+    width: 100%;
+    background-color: #071026;
+}
+.card-text{
+    font-family: bebas !important;
+}
+.heading{
+    font-family: bebas !important;
+    font-size: 3rem;
+    color: white;
+    margin-left: 2rem;
+
+}
+.card-container {
+    display: flex;
+    width: 95%;
+    margin-left: 2.5%;
+   flex-wrap: wrap;
+   justify-content: space-between;
+    
+}
+.card-container > div {
+    /* flex: 1; */
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+.card{
+    height: 24rem;
+    width: 20rem;
+}
+.card-img-top{
+    height: 85%;
+    object-fit: cover;
+    object-position: 5% 25%; 
+}
+.card-body{
+    border-top: 2px solid #B8B9BB;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+}
+.card-body p{
+    font-size: 1.3rem;
+    padding: 0;
+}

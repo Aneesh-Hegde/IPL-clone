@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        /* Your existing CSS styles go here */
+        body {
+            font-family: Arial, sans-serif;
+
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.9em;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        th,
+        td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #009879;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f3f3f3;
+        }
+
+        .win {
+            color: green;
+            background-color: white;
+            border: 2px solid green;
+            border-radius: 50%;
+            padding: 5px;
+            margin: 2px;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        .loss {
+            color: red;
+            background-color: white;
+            border: 2px solid red;
+            border-radius: 50%;
+            padding: 5px;
+            margin: 2px;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        .team-logo {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="pointsTable">
+        <tr>
+            <th>POS</th>
+            <th>TEAM</th>
+            <th>P</th>
+            <th>W</th>
+            <th>L</th>
+            <th>NR</th>
+            <th>NRR</th>
+            <th>FOR</th>
+            <th>AGAINST</th>
+            <th>PTS</th>
+            <th>RECENT FORM</th>
+        </tr>
+    </table>
+
+    <script>
+        var pointsData = [
+            { pos: 1, team: 'RCB', logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/0/0a/Royal_Challengers_Bengaluru_Logo.png/160px-Royal_Challengers_Bengaluru_Logo.png', p: 7, w: 6, l: 1, nr: 0, nrr: 0.677, for: '1266/134.3', against: '1223/140.0', pts: 12, form: 'WWLWW' },
+            { pos: 2, team: 'KKR', logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/eb/Sunrisers_Hyderabad.png/260px-Sunrisers_Hyderabad.png', p: 6, w: 4, l: 2, nr: 0, nrr: 1.399, for: '1188/112.3', against: '1078/117.4', pts: 8, form: 'LWLWW' },
+            { pos: 3, team: 'CSK', logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/2b/Chennai_Super_Kings_Logo.svg/245px-Chennai_Super_Kings_Logo.svg.png', p: 6, w: 4, l: 2, nr: 0, nrr: 0.726, for: '1065/116.2', against: '996/118.1', pts: 8, form: 'WWLLW' },
+            { pos: 4, team: 'SRH', logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/eb/Sunrisers_Hyderabad.png/260px-Sunrisers_Hyderabad.png', p: 6, w: 4, l: 2, nr: 0, nrr: 0.502, for: '1278/118.1', against: '1229/119.1', pts: 8, form: 'WWWLW' },
+            { pos: 5, team: 'LSG', logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/a/a9/Lucknow_Super_Giants_IPL_Logo.svg/290px-Lucknow_Super_Giants_IPL_Logo.svg.png', p: 6, w: 3, l: 3, nr: 0, nrr: 0.038, for: '1044/120.0', against: '986/113.5', pts: 6, form: 'LLWWW' },
+            { pos: 6, team: 'DC', logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/2f/Delhi_Capitals.svg/240px-Delhi_Capitals.svg.png', p: 7, w: 3, l: 4, nr: 0, nrr: -0.074, for: '1171/127.0', against: '1295/139.2', pts: 6, form: 'WWLLW' },
+            { pos: 7, team: 'MI', logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/c/cd/Mumbai_Indians_Logo.svg/235px-Mumbai_Indians_Logo.svg.png', p: 7, w: 3, l: 4, nr: 0, nrr: -0.133, for: '1344/135.3', against: '1362/135.3', pts: 6, form: 'WLWWL' },
+            { pos: 8, team: 'GT', logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/a/a9/Lucknow_Super_Giants_IPL_Logo.svg/290px-Lucknow_Super_Giants_IPL_Logo.svg.png', p: 7, w: 3, l: 4, nr: 0, nrr: -1.303, for: '1096/139.1', against: '1181/128.4', pts: 6, form: 'LWLLW' },
+            { pos: 9, team: 'PBKS', logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Punjab_Kings_Logo.svg/170px-Punjab_Kings_Logo.svg.png', p: 7, w: 2, l: 5, nr: 0, nrr: -0.251, for: '1241/139.1', against: '1276/139.1', pts: 4, form: 'LLLWL' },
+            { pos: 10, team: 'RR', logo: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/5c/This_is_the_logo_for_Rajasthan_Royals%2C_a_cricket_team_playing_in_the_Indian_Premier_League_%28IPL%29.svg/200px-This_is_the_logo_for_Rajasthan_Royals%2C_a_cricket_team_playing_in_the_Indian_Premier_League_%28IPL%29.svg.png', p: 7, w: 1, l: 6, nr: 0, nrr: -1.185, for: '1327/139.2', against: '1394/130.1', pts: 2, form: 'LLLLL' },
+
+
+
+            // Add more teams as needed
+        ];
+
+        var table = document.getElementById('pointsTable');
+
+        for (var i = 0; i < pointsData.length; i++) {
+            // Your existing code to create table rows and cells goes here
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            var cell6 = row.insertCell(5);
+            var cell7 = row.insertCell(6);
+            var cell8 = row.insertCell(7);
+            var cell9 = row.insertCell(8);
+            var cell10 = row.insertCell(9);
+            var cell11 = row.insertCell(10);
+            cell1.innerHTML = pointsData[i].pos;
+            cell3.innerHTML = pointsData[i].p;
+            cell4.innerHTML = pointsData[i].w;
+            cell5.innerHTML = pointsData[i].l;
+            cell6.innerHTML = pointsData[i].nr;
+            cell7.innerHTML = pointsData[i].nrr;
+            cell8.innerHTML = pointsData[i].for;
+            cell9.innerHTML = pointsData[i].against;
+            cell10.innerHTML = pointsData[i].pts;
+            cell11.innerHTML = '';
+
+            var img = document.createElement('img');
+            img.src = pointsData[i].logo;
+            img.className = 'team-logo';
+            cell2.appendChild(img);
+            cell2.innerHTML += pointsData[i].team;
+
+            // Rest of your code to fill the table cells goes here
+            for (var j = 0; j < pointsData[i].form.length; j++) {
+                var span = document.createElement('span');
+                span.textContent = pointsData[i].form[j];
+                if (pointsData[i].form[j] === 'W') {
+                    span.className = 'win';
+                } else if (pointsData[i].form[j] === 'L') {
+                    span.className = 'loss';
+                }
+                cell11.appendChild(span);
+            }
+        }
+    </script>
+</body>
+
+</html>
